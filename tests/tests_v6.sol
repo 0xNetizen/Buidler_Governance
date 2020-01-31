@@ -2,18 +2,6 @@
 
 This contract simulates the interactions of an individual user with the contract and tests all functions as it moves through different states.
 
-The tests will be internal functions and will be called externally by one function. 
-
-The tests will be separated by state since there needs to be a certain amount of time delay.
-
-I will focus on just the function I'm most interested in first.
-
-Some internal functions will simply be repeated many times.
-
-The output of the smart contract will also need to be tested.
-
-Will first start using it by deploying tests and other contracts separately. 
-
 */
 pragma solidity ^0.5.0;
 import "gov_v3.14.sol";
@@ -38,23 +26,6 @@ contract user_tests is DSMath{
 	uint init_buy_size;
     uint init_sell_size;
 
-/**
-	constructor() public {
-		ERC20Interface = ERC20(_erc20);
-		gov_interface = IOnchain_gov(_gov);
-		ERC_gov_interface = ERC20(_gov);
-		erc20 = _erc20;
-		gov = _gov;
-		init_sell_size = _init_sell_size;
-
-	}*/
-
-	//Can start with some functions being external and then make them internal later.
-	
-	/**
-	function set_ERC20Interface(address _fake_dai) external {
-	    ERC20Interface = ERC20(_fake_dai);
-	} */
 
 	event Set_init_sell_size(uint init_buy_size, uint init_sell_size);
     
@@ -95,16 +66,6 @@ contract user_tests is DSMath{
 		require(_amount == sub(gov_balance, ERC_gov_interface.balanceOf(address(this))), "gov_balance_down_test");
 		set_balances();
 	}
-
-
-	
-
-	
-
-
-	//Reset test with refunds.
-	//Could be made more efficient by using small amount instead of 1. 
-	//Then balances could be tested for this amount. 
 
 	event debug_value(uint value);
 
@@ -266,30 +227,10 @@ contract user_tests is DSMath{
     	init_proposal(_id);
     }
 
-    
-
-
-
 
 }
 
 contract tests_and_dai is user_tests, onchain_gov_events{
-
-	/**We want this contract to:
-	- Deploy fakedai as a separate contract.  
-	- Deploy user_tests within this contract via inheritance so its functions can be called.
-	- Set the correct fakedai interface address.
-	- Give fakedai to this contract so it can be used.
-
-	For the gov child contract, we will need to:
-	- Give correct test_and_dai_child address to constructor. 
-	- Constructor calls a function in test_and_dai_child to set the correct gov address in user_tests.
-	- Constructor calls a function in test_and_dai_child that reveals correct fakedai address and then sets the fakedai interface to that address.
-	- Gov tokens are given to the test_and_dai_child address.
-	- Initial tranche size is set in the test_and_dai_child contract.
-
-	Looks like everything's done - test tomorrow.  
-	*/
 
 	constructor() public {
 		fakedai_Interface = new fakedai();
@@ -312,10 +253,6 @@ contract tests_and_dai is user_tests, onchain_gov_events{
 	function get_balance(address _owner) public view returns (uint){
 	    return fakedai_Interface.balanceOf(_owner);
 	}
-	
-	
-
-
 
 
 }
