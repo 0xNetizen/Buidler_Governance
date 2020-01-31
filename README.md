@@ -14,18 +14,18 @@ A governance mechanism for sustainably funding tokenised public goods.
 ## submit_proposal
 "next" always refers to next proposal after this submitted one if the submitted one is successfully accepted.
 
-"price", unless stated otherwise, always refers to [tokens trader receives]/[tokens trader gives] i.e. traders always want the price to be as high as possible no matter if they are trading on the `buy` or `sell` side of the auction. 
+"price", unless stated otherwise, always refers to [tokens trader receives]/[tokens trader gives] i.e. traders always want the price to be as high as possible no matter if they are trading on the `buy` or `sell` side of the auction. Similarly, price is always increasing on both sides of the auction.
 
 |name |type |description
 |-----|-----|-----------
 |_amount|uint256|Proposal amount requested by proposer (beneficiary). (WAD)
 |_next_init_tranche_size|uint256|Initial size in dai (or other external token) of the first tranche for the *next* proposal. (WAD)
 |_next_init_price_data|uint256[4]|Array of data for next proposal [initial buy price (WAD), initial sell price (WAD), base (WAD), exponent factor (int)] `price = wmul(price_data[_side], wpow(price_data[2], mul(price_data[3], sub(_now, current_tranche_start))/WAD))`
-|_next_reject_spread_threshold|uint256|
-|_next_minimum_sell_volume|uint256|
-|_prop_period|uint40|
-|_next_min_prop_period|uint40|
-|_reset_time_period|uint40|
+|_next_reject_spread_threshold|uint256|The spread threshold at which the next proposal can be rejected where spread = sell_price * buy_price (WAD)
+|_next_minimum_sell_volume|uint256|The minimum total volume that must be traded on the sell and the buy side of the proposal for the next proposal to pass. (WAD)
+|_prop_period|uint40|The amount of time after initialisation that the current proposal has to be accepted, otherwise it may be rejected after this time has elapsed. (int)
+|_next_min_prop_period|uint40|Minimum prop period for the next proposal.(int)
+|_reset_time_period|uint40|If there are no successfully submitted proposals for this time period, the `reset` function may be called to reset the last proposal price.
 
 
 # Future development
