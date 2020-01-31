@@ -14,7 +14,7 @@ A governance mechanism for sustainably funding tokenised public goods.
 ## submit_proposal - read
 |name |type |description
 |-----|-----|-----------
-|_amount|uint256|
+|_amount|uint256|s
 |_next_init_tranche_size|uint256|
 |_next_init_price_data|uint256[4]|
 |_next_reject_spread_threshold|uint256|
