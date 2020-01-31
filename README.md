@@ -9,12 +9,12 @@ A governance mechanism for sustainably funding tokenised public goods.
 
 # Contract interaction
 - Users firstly need either the testnet erc20 WEENUS token or some testnet gov tokens.
-- Users should `approve` the gov contract address to spend WEENUS if they want to 'buy', 'close_tranche_buy' or 'submit_proposal'.
+- Users should `approve` the gov contract address to spend WEENUS if they want to `buy`, `close_tranche_buy` or `submit_proposal`.
 
 ## submit_proposal - read
 |name |type |description
 |-----|-----|-----------
-|_amount|uint256|s
+|_amount|uint256|Proposal amount requested by proposer (beneficiary).
 |_next_init_tranche_size|uint256|
 |_next_init_price_data|uint256[4]|
 |_next_reject_spread_threshold|uint256|
@@ -22,7 +22,6 @@ A governance mechanism for sustainably funding tokenised public goods.
 |_prop_period|uint40|
 |_next_min_prop_period|uint40|
 |_reset_time_period|uint40|
-
 
 # Future development
 - Fontend website listing proposals and current proposal status with trading data.
