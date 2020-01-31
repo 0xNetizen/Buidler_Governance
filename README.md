@@ -9,7 +9,7 @@ A governance mechanism for sustainably funding tokenised public goods.
 
 # Contract interaction
 - Users firstly need either the testnet erc20 WEENUS token or some testnet gov tokens.
-- Users should 'approve' the gov contract address to spend WEENUS if they want to 'buy', 'close_tranche_buy' or 'submit_proposal'.
+- Users should `approve` the gov contract address to spend WEENUS if they want to 'buy', 'close_tranche_buy' or 'submit_proposal'.
 
 ## submit_proposal - read
 |name |type |description
