@@ -27,7 +27,7 @@ A governance mechanism for sustainably funding tokenised public goods.
 |_next_minimum_sell_volume|uint256|The minimum total volume that must be traded on the sell and the buy side of the proposal for the next proposal to be accepted. (`WAD`)
 |_prop_period|uint40|The amount of time after initialisation that may elapse and the proposal may still be accepted, otherwise it may be rejected i.e. after this time has elapsed. (int)
 |_next_min_prop_period|uint40|Minimum `_prop_period` for the next proposal. (int)
-|_reset_time_period|uint40|If there are no successfully submitted proposals for this time period, the `reset` function may be called to reset the last proposal price. (int)
+|_reset_time_period|uint40|If there are no successfully submitted proposals for this time period, the `reset` function may be called to effectively reset the most recently accepted proposal data. (int)
 
 
 # Future development
