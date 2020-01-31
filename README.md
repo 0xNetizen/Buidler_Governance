@@ -8,6 +8,8 @@ A governance mechanism for sustainably funding tokenised public goods.
 ![Governance Flowchart](./flowcharts/gov_flow7.png)
 
 # Contract interaction
+This section will be updated further soon. For now, if more info is needed, see code comments in gov_v3.14.sol. 
+
 - Users firstly need either the testnet erc20 WEENUS token or some testnet gov tokens.
 - Users should `approve` the gov contract address to spend WEENUS if they want to `buy`, `close_tranche_buy` or `submit_proposal`.
 
@@ -16,7 +18,7 @@ A governance mechanism for sustainably funding tokenised public goods.
 
 "price", unless stated otherwise, always refers to [tokens trader receives]/[tokens trader gives] i.e. traders always want the price to be as high as possible no matter if they are trading on the `buy` or `sell` side of the auction. Similarly, price is always increasing on both sides of the auction.
 
-`WAD` refers to the use of fixed point 18 decimals while "int" refers to using integers.
+`WAD` refers to the use of fixed point 18 decimals.
 
 |name |type |description
 |-----|-----|-----------
