@@ -96,7 +96,7 @@ contract onchain_gov is IOnchain_gov, proposal_tokens, onchain_gov_events{
 
 		uint minimum_sell_volume = proposal[pa_proposal_id].next_minimum_sell_volume;
 
-		uint dai_out = add(wmul(990000000000000000, proposal[_id].amount), minimum_sell_volume);
+		uint dai_out = add(proposal[_id].amount, minimum_sell_volume);
 
 		uint net_balance = net_dai_balance;
 
@@ -291,13 +291,13 @@ contract onchain_gov is IOnchain_gov, proposal_tokens, onchain_gov_events{
 
 		if (accept_price > WAD){ //If proposal accepted: (change to require later)
 			proposal[id].status = 2;
-			ERC20Interface.transfer(proposal[id].beneficiary, proposal[id].amount);
+			ERC20Interface.transfer(proposal[id].beneficiary, wmul(proposal_amount, 1010000000000000000)); //return deposit and make proposal payment.
 			pa_proposal_id = running_proposal_id;
 			running_proposal_id = 0;
 
 			_supply = sub(add(_supply, proposal[id].side[0].total_tokens_traded), proposal[id].side[1].total_tokens_traded);
 
-			net_dai_balance = sub(add(net_dai_balance, current_total_dai_sold), add(wmul(990000000000000000, proposal_amount), proposal[id].side[1].total_dai_traded)); //Update net_dai_balance
+			net_dai_balance = sub(add(net_dai_balance, current_total_dai_sold), add(proposal_amount, proposal[id].side[1].total_dai_traded)); //Update net_dai_balance
 		}
 
 		emit AcceptAttempt (accept_price, wdiv(current_total_dai_sold, current_total_tokens_bought), wdiv(proposal[id].side[1].total_dai_traded, proposal[id].side[1].total_tokens_traded));
