@@ -1,7 +1,7 @@
 # Buidler_Governance
 A governance mechanism for sustainably funding tokenised public goods.
 
-[Medium article]()  
+[Medium article](https://medium.com/@b._/buidler-governance-a-solution-for-the-governance-and-funding-of-tokenised-public-goods-73c21b8067c7)  
 [Telegram group](https://t.me/Buidler_Governance)  
 [Rinkeby contract address](https://rinkeby.etherscan.io/address/0xaf439262Be9E6dD2C808a8464370621a553c4CB4): 0xaf439262Be9E6dD2C808a8464370621a553c4CB4  
 
