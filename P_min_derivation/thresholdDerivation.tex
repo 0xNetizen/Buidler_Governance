@@ -1,0 +1,99 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{Buidler Governance Equations and Derivations}
+\date{January 2020}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    A derivation of the criteria to be met for a governance decision to be wealth creating using the previously accepted and current proposal trading data for a two-sided dutch auction governance design. The analysis assumes both rational and irrational attackers.
+\end{abstract}
+
+\section{Motivation and setup}
+For a governance mechanism to be sustainable, decisions must be on average wealth creating for the system that is being governed. For a tokenised good, that means the token must increase in value i.e. the price at the point of the current proposal ($n$) must be greater than the price of the previous proposal ($n-1$). In this case we state the condition:
+
+\begin{align}
+    \mathrm{gov\_price}_{n} > \mathrm{gov\_price}_{n-1}\\
+    \mathrm{gov\_price}_{n}[\mathrm{gov}_{n-1}] > 1.0
+\end{align}
+
+where $\mathrm{gov\_price}_{n}[\mathrm{gov}_{n-1}]$ is the market price of the governance tokens (gov) if the current proposal ($n$) is accepted, in terms of the market price of gov just after the previously accepted proposal $n-1$ i.e. the amount of gov$_{n-1}$ tokens one could trade in exchange for a gov$_n$ token and vice versa.
+
+
+The first obstacle we must pass is the impossibility of traders ever exchanging gov$_n$ for gov$_{n-1}$ since they never exist at the same time. However, we can calculate these prices a different way by finding the price in terms of dai. The gov$_n$ dai-price can be found from the \emph{current} proposal auctions and the gov$_{n-1}$ dai-price can be found from the \emph{previous} proposal auctions.
+
+
+\begin{align}
+    \mathrm{gov\_price}_{n}[\mathrm{gov}_{n-1}] &= \mathrm{gov\_p}_{n,\mathrm{dai}} \times \mathrm{dai\_p}_{n-1,\mathrm{gov}} \label{eqn:proposal_price}\\ 
+           &= \frac{V_{n,\mathrm{dai}}}{V_{n,\mathrm{gov}}} \times \frac{V_{n-1,\mathrm{gov}}}{V_{n-1,\mathrm{dai}}}
+\end{align}
+
+where gov\_p$_{n,\mathrm{dai}}$ is the price of the governance tokens in terms of dai at the time of the current proposal $n$; dai\_p$_{n-1,\mathrm{gov}}$ is the price of dai in terms governance tokens at the time of previous proposal $n-1$; and V is referring to a trade volume traded at the true market price. 
+
+This then leaves us with the problem of finding exact prices in terms of dai during proposals. Since, it is not possible to find exact true market prices and it is only necessary to guarantee that gov\_price$_{n}[$gov$_{n-1}] > 1.0$ for the proposal to be wealth creating, we need only calculate the \emph{minimum} market prices.
+\section{Proposal manipulation from rational and irrational attackers}
+No assumptions about attackers can be made since attackers may be irrational. However, since the governance mechanism is essentially the trading of tokens and an inflationary payment to the proposal beneficiary, as long as it is necessary for the attacker to make unprofitable trades in order to manipulate the mechanism, there will be a point as which the attacker effectively pays for the proposal acceptance payment, and any further price manipulation is simply an exchange of value from the attacker to the other token traders. To do this, \textbf{the governance mechanism accepts any proposal where the attacker must spend more than the proposal amount in order to manipulate the vote.} Therefore, the following condition must hold:
+
+\begin{equation}
+    \mathrm{profit[dai]} + A_n > 0 \label{eq:profit}
+\end{equation}
+
+where profit[dai] is the attacker's profit (expected to be negative) and $A_n$ is the proposal amount awarded to the beneficiary if the proposal is accepted by the governance mechanism.
+
+Equation \ref{eq:profit} represents the point at which the attacker has effectively paid for the proposal. Any trading the attacker makes beyond this point is arbitrary from the mechanism's perspective and is effectively the attacker making unprofitable trades with the governance mechanism. Therefore, we only need to calculate the minimum market price for gov\_price$_{n}[$gov$_{n-1}]$ when profit[dai] $+\ A_n > 0$ rather than the minimum market price in any circumstances. 
+
+For the current proposal ($n$), the attacker can only manipulate the price of the \emph{buy} auction higher rather than the \emph{sell} auction since gov\_p$_{n,\mathrm{dai}}$ increases over time. Therefore, in such a trade they receive gov and send dai with a negative expected profit relative to the true market price:
+
+\begin{align}
+    \mathrm{profit[dai]} &= V_{n, \mathrm{gov}}^{\mathrm{buy}} \times \mathrm{gov\_p}_{n,\mathrm{dai}} - V_{n, \mathrm{dai}}^{\mathrm{buy}}\\
+    \mathrm{profit[dai]} + A_n &> 0\\
+    \mathrm{gov\_p}_{n,\mathrm{dai}} &> \frac{(V_{n, \mathrm{dai}}^{\mathrm{buy}} - A_n)}{ V_{n, \mathrm{gov}}^{\mathrm{buy}}} \label{eqn:gov_price}
+\end{align}
+
+Likewise, for the previous proposal ($n-1$), the attacker will seek to increase the price of dai\_p$_{n-1,\mathrm{gov}}$. Therefore, they will use the sell side of the auction since the price increases over time and they can manipulate it down.
+
+\begin{align}
+    \mathrm{profit[dai]} &= V_{n-1, \mathrm{dai}}^{\mathrm{sell}} - V_{n-1, \mathrm{gov}}^{\mathrm{sell}} \times \mathrm{gov\_p}_{n-1,\mathrm{dai}}\\
+    \mathrm{profit[dai]} + A_n &> 0\\
+    \mathrm{dai\_p}_{n-1,\mathrm{gov}} &= \frac{1}{\mathrm{gov\_p}_{n-1,\mathrm{dai}}} > \frac{V_{n-1, \mathrm{gov}}^{\mathrm{sell}}}{V_{n-1, \mathrm{dai}}^{\mathrm{sell}} + A_n} \label{eqn:dai_price}
+\end{align}
+
+\section{Derivation}
+
+Substitute equations \ref{eqn:gov_price} and \ref{eqn:dai_price} into \ref{eqn:proposal_price} to yield:
+
+\begin{equation}
+\mathrm{P}_{n,\mathrm{min}} = \frac{(V_{n,\ \mathrm{dai}}^{\mathrm{buy}} - A_{n,a})}{V_{n,\ \mathrm{gov}}^{\mathrm{buy}}}  \times 
+\frac{V_{n-1,\ \mathrm{gov}}^{\mathrm{sell}}} {(A_{n,b} + V_{n-1,\ \mathrm{dai}}^{\mathrm{sell}})}
+\end{equation}
+
+where $A_{n} = A_{n,a} + A_{n,b}$ since the attacker can only spend up to the value of $A_n$ and not beyond it i.e. they would face the decision of how to split this across the previous ($n-1$) and present ($n$) proposals. If we consider how $P_{n,\mathrm{min}}$ changes with respect to how the attacker splits $A_n$...
+
+\begin{align}
+    \frac{\partial P_{n,\mathrm{min}}}{\partial A_{n,a}} &= - \frac{V_{n-1, \mathrm{gov}}^{\mathrm{sell}}}{V_{n, \mathrm{gov}}^{\mathrm{buy}}} \times \frac{A_n - V_{n, \mathrm{dai}}^{\mathrm{buy}} + V_{n-1, \mathrm{dai}}^{\mathrm{sell}}}{(A_n - A_{n,a} + V_{n-1, \mathrm{dai}}^{\mathrm{sell}})^2}\\
+    \frac{\partial P_{n,\mathrm{min}}}{\partial A_{n,b}} &= \frac{V_{n-1, \mathrm{gov}}^{\mathrm{sell}}}{V_{n, \mathrm{gov}}^{\mathrm{buy}}} \times \frac{A_n - V_{n, \mathrm{dai}}^{\mathrm{buy}} + V_{n-1, \mathrm{dai}}^{\mathrm{sell}}}{(A_{n,b} + V_{n-1, \mathrm{dai}}^{\mathrm{sell}})^2}
+\end{align}
+
+...it is optimum for the attacker to put all funds either in $A_{n,a}$ or $A_{n,b}$ depending on which auction has the lowest trading volume in terms of $dai$ such that:
+
+
+\begin{align}
+    V_{n, \mathrm{dai}}^{\mathrm{buy}} &< V_{n-1, \mathrm{dai}}^{\mathrm{sell}} + A_n &\Rightarrow &P_{n, \mathrm{min}} = \frac{V_{n-1, \mathrm{gov}}^{\mathrm{sell}}}{V_{n, \mathrm{gov}}^{\mathrm{buy}}}  \times  \frac{(V_{n, \mathrm{dai}}^{\mathrm{buy}} - A_{n})} {V_{n-1, \mathrm{dai}}^{\mathrm{sell}}}\\
+    V_{n, \mathrm{dai}}^{\mathrm{buy}} &> V_{n-1, \mathrm{dai}}^{\mathrm{sell}} + A_n &\Rightarrow &P_{n, \mathrm{min}} = \frac{V_{n-1, \mathrm{gov}}^{\mathrm{sell}}}{V_{n, \mathrm{gov}}^{\mathrm{buy}}}  \times \frac{V_{n, \mathrm{dai}}^{\mathrm{buy}}} {(A_n + V_{n-1, \mathrm{dai}}^{\mathrm{sell}})}
+\end{align}
+
+Or:
+
+\begin{equation}
+    P_{n, \mathrm{min}} = \frac{V_{n-1, \mathrm{gov}}^{\mathrm{sell}}}{V_{n, \mathrm{gov}}^{\mathrm{buy}}}  \times \mathrm{min} \left(\frac{V_{n, \mathrm{dai}}^{\mathrm{buy}}} {(A_n + V_{n-1, \mathrm{dai}}^{\mathrm{sell}})}, \frac{(V_{n, \mathrm{dai}}^{\mathrm{buy}} - A_{n})} {V_{n-1, \mathrm{dai}}^{\mathrm{sell}}} \right)
+\end{equation}
+
+
+A nice way to think about this is that the attacker is choosing the weakest side to manipulate.
+
+
+\end{document}
